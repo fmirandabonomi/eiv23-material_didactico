@@ -1265,6 +1265,70 @@ Ferando Alberto Miranda Bonomi
 <section id="funciones-inline" class="slide level2">
 <h2>Funciones inline</h2>
 <p>En C99 se introdujo un especificador <code>inline</code> que indica que el código de la función puede ser “pegado” dentro de otra función en lugar de hacer un llamado. Esto permite evitar la sobrecarga de llamar a una función sencilla.</p>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>El compilador de C solo hace la inclusión en línea del código <strong>si está activada la optimización</strong>. Si no está activada la optimización el compilador realizará un llamado normal en su lugar.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Las funciones <code>inline</code> invierten las posiciones de la declaración y la implementación. Son implementadas en el encabezado y declaradas en un archivo .c. En el archivo donde son declaradas se genera el código accesible de forma normal (cuando no es insertada en línea).</p>
+<ul>
+<li>Donde originalmente iría la declaración va la implementación calificada por <code>inline</code>.</li>
+<li>Donde originalmente iría la implementación va un declaración calificada por <code>extern inline</code>. Esta declaración es especial, indica que en este punto debe compilarse la función de manera normal. Esto es necesario para el uso normal de la función, si se omitiera fallaría el linker si se compila sin optimizar o se llama la función desde un puntero.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ejemplo.h</strong></pre>
+</div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="pp">#ifndef EJEMPLO_H</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="pp">#define EJEMPLO_H</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="dt">int</span> fn_normal<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">);</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="kw">inline</span> <span class="dt">int</span> fn_inline<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">)</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a><span class="op">{</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a>    <span class="cf">return</span> a<span class="op">-</span>b<span class="op">;</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a><span class="op">}</span></span>
+<span id="cb36-10"><a href="#cb36-10"></a><span class="pp">#endif</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ejemplo.c</strong></pre>
+</div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1"></a><span class="pp">#include </span><span class="im">"ejemplo.h"</span><span class="pp"> </span><span class="co">// Este módulo</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="dt">int</span> fn_normal<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>    <span class="cf">return</span> a<span class="op">*</span>b<span class="op">;</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="op">}</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a></span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="co">// En este caso extern es necesario.</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a><span class="kw">extern</span> <span class="kw">inline</span> <span class="dt">int</span> fn_inline<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">);</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="punteros" class="slide level2">
 <h2>Punteros</h2>
@@ -1289,12 +1353,12 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplos</strong></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="dt">int</span> x<span class="op">=</span><span class="dv">5</span><span class="op">,</span> <span class="op">*</span>a<span class="op">=&amp;</span>x<span class="op">,</span> <span class="op">**</span>b<span class="op">=&amp;</span>a<span class="op">,</span> <span class="op">***</span>c<span class="op">=&amp;</span>b<span class="op">;</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="co">/* x es una variable entero</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a><span class="co"> * a es una variable puntero a entero</span></span>
-<span id="cb36-4"><a href="#cb36-4"></a><span class="co"> * b es una variable puntero a puntero a entero</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a><span class="co"> * c es una variable puntero a puntero a puntero a entero</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1"></a><span class="dt">int</span> x<span class="op">=</span><span class="dv">5</span><span class="op">,</span> <span class="op">*</span>a<span class="op">=&amp;</span>x<span class="op">,</span> <span class="op">**</span>b<span class="op">=&amp;</span>a<span class="op">,</span> <span class="op">***</span>c<span class="op">=&amp;</span>b<span class="op">;</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="co">/* x es una variable entero</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="co"> * a es una variable puntero a entero</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="co"> * b es una variable puntero a puntero a entero</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="co"> * c es una variable puntero a puntero a puntero a entero</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="footer footer-default">
 
