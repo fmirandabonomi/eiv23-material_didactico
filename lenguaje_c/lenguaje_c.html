@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.269">
 
   <meta name="author" content="Ferando Alberto Miranda Bonomi">
-  <meta name="dcterms.date" content="2023-04-21">
+  <meta name="dcterms.date" content="2023-04-24">
   <title>Lenguaje C</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -399,7 +399,7 @@ Ferando Alberto Miranda Bonomi
 </div>
 </div>
 
-  <p class="date">2023-04-21</p>
+  <p class="date">2023-04-24</p>
 </section>
 <section id="lenguaje-de-programación" class="slide level2">
 <h2>Lenguaje de programación</h2>
@@ -489,10 +489,9 @@ Ferando Alberto Miranda Bonomi
 <p>Es un procesador de texto automático. Procesa los <em>comentarios</em> y las <em>directivas del preprocesador</em>.</p>
 <p>La salida del preprocesador es la entrada del compilador de C propiamente.</p>
 </section>
-<section id="comentarios" class="slide level2">
-<h2>Comentarios</h2>
-<p>Un comentario es todo texto entre <code>/*</code> y <code>*/</code> o entre <code>//</code> y el fin de línea.</p>
-<p>El preprocesador elimina los comentarios, reemplazándolos por un espacio en blanco.</p>
+<section class="slide level2">
+
+<p>Un comentario es todo texto entre <code>/*</code> y <code>*/</code> o entre <code>//</code> y el fin de línea. El preprocesador elimina los comentarios, reemplazándolos por un espacio en blanco.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>main.c</strong></pre>
@@ -514,8 +513,8 @@ Ferando Alberto Miranda Bonomi
 <span id="cb5-15"><a href="#cb5-15"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="directivas" class="slide level2">
-<h2>Directivas</h2>
+<section class="slide level2">
+
 <p>Las directivas del preprocesador comienzan con un caracter numeral (<code>#</code>), que debe ser el primer caracter de la línea y continúan hasta el final de línea. Pueden prolongarse en varias líneas escapando las nuevas líneas con el caracter barra invertida (<code>\</code>).</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -814,10 +813,25 @@ Ferando Alberto Miranda Bonomi
 <p><strong>Vinculación externa</strong> : variables <code>extern</code> (o sin especificador) declaradas dentro (no recomendable) o fuera de una función. Son accesibles desde cualquier unidad de traducción (archivo .c) y desde el código externo si se trata de una librería.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>Ejemplo</strong></pre>
+<pre><strong>ejemplo.h</strong></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a><span class="dt">int</span> numero_global<span class="op">;</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="kw">extern</span> <span class="dt">int</span> numero_global<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a><span class="pp">#ifndef EJEMPLO_H</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="pp">#define EJEMPLO_H</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co">// Esta es una declaración externa que no reserva espacio</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="kw">extern</span> <span class="dt">int</span> numero_global<span class="op">;</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="pp">#endif</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ejemplo.c</strong></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="pp">#include </span><span class="im">&lt;ejemplo.h&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co">// Si se omite extern la declaración también es externa </span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co">// pero sí reserva espacio. Solo puede hacerse reserva </span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co">// de espacio en un archivo .c, en los demás archivos</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">// que acceden la variable debe usarse extern</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="co">// (normalmente se hace al incluir ejemplo.h)</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="dt">int</span> numero_global<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calificadores" class="slide level2">
@@ -844,18 +858,18 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="dt">int</span> suma<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>    <span class="dt">const</span> <span class="dt">int</span> c <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a>    <span class="cf">return</span> c<span class="op">;</span> </span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="op">}</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="dt">int</span> strlen<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>c<span class="op">){</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a>    <span class="dt">int</span> A<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a>    <span class="cf">while</span><span class="op">(*</span>c<span class="op">){</span> <span class="co">// lee</span></span>
-<span id="cb21-8"><a href="#cb21-8"></a>        <span class="op">++</span>A<span class="op">;</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a>        <span class="op">++</span>c<span class="op">;</span> <span class="co">// desplaza puntero</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a>    <span class="op">}</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a>    <span class="cf">return</span> A<span class="op">;</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="dt">int</span> suma<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>    <span class="dt">const</span> <span class="dt">int</span> c <span class="op">=</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="cf">return</span> c<span class="op">;</span> </span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="op">}</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="dt">int</span> strlen<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>c<span class="op">){</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>    <span class="dt">int</span> A<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>    <span class="cf">while</span><span class="op">(*</span>c<span class="op">){</span> <span class="co">// lee</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a>        <span class="op">++</span>A<span class="op">;</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>        <span class="op">++</span>c<span class="op">;</span> <span class="co">// desplaza puntero</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>    <span class="op">}</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>    <span class="cf">return</span> A<span class="op">;</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -865,18 +879,18 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="dt">volatile</span> <span class="dt">unsigned</span> <span class="dt">long</span> ticks<span class="op">;</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="co">// Rutina de servicio de interrupción llamada</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="co">// por el timer SysTick una ves por milisegundo</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="dt">void</span> SysTick_Handler<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a>    <span class="op">++</span>ticks<span class="op">;</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="op">}</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a></span>
-<span id="cb22-8"><a href="#cb22-8"></a><span class="dt">void</span> espera<span class="op">(</span><span class="dt">unsigned</span> <span class="dt">long</span> ms<span class="op">){</span></span>
-<span id="cb22-9"><a href="#cb22-9"></a>    <span class="dt">const</span> <span class="dt">unsigned</span> <span class="dt">long</span> inicial <span class="op">=</span> ticks<span class="op">;</span></span>
-<span id="cb22-10"><a href="#cb22-10"></a>    <span class="cf">while</span><span class="op">(</span>ticks <span class="op">-</span> inicial <span class="op">&lt;</span> ms<span class="op">)</span></span>
-<span id="cb22-11"><a href="#cb22-11"></a>        __WFE<span class="op">();</span></span>
-<span id="cb22-12"><a href="#cb22-12"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a><span class="dt">volatile</span> <span class="dt">unsigned</span> <span class="dt">long</span> ticks<span class="op">;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="co">// Rutina de servicio de interrupción llamada</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="co">// por el timer SysTick una ves por milisegundo</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="dt">void</span> SysTick_Handler<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>    <span class="op">++</span>ticks<span class="op">;</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="op">}</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a></span>
+<span id="cb23-8"><a href="#cb23-8"></a><span class="dt">void</span> espera<span class="op">(</span><span class="dt">unsigned</span> <span class="dt">long</span> ms<span class="op">){</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>    <span class="dt">const</span> <span class="dt">unsigned</span> <span class="dt">long</span> inicial <span class="op">=</span> ticks<span class="op">;</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a>    <span class="cf">while</span><span class="op">(</span>ticks <span class="op">-</span> inicial <span class="op">&lt;</span> ms<span class="op">)</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a>        __WFE<span class="op">();</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tipos-de-datos" class="slide level2">
@@ -901,25 +915,25 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="co">/* Una rutina de servicio de interrupción</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="co"> * es llamada por hardware. No puede recibir</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="co"> * parámetros ni retornar valor (pues no hay</span></span>
-<span id="cb23-5"><a href="#cb23-5"></a><span class="co"> * quien lo reciba).</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a><span class="co"> */</span> </span>
-<span id="cb23-7"><a href="#cb23-7"></a>   <span class="dt">void</span> SysTick_Handler<span class="op">(</span><span class="dt">void</span><span class="op">){...}</span></span>
-<span id="cb23-8"><a href="#cb23-8"></a><span class="co">/*   ↑                    ↑</span></span>
-<span id="cb23-9"><a href="#cb23-9"></a><span class="co"> *   │                    └ No acepta argumentos</span></span>
-<span id="cb23-10"><a href="#cb23-10"></a><span class="co"> *   └───────────────────────── No retorna valor</span></span>
-<span id="cb23-11"><a href="#cb23-11"></a><span class="co"> */</span></span>
-<span id="cb23-12"><a href="#cb23-12"></a></span>
-<span id="cb23-13"><a href="#cb23-13"></a><span class="co">/* Función de librería estándar que reserva</span></span>
-<span id="cb23-14"><a href="#cb23-14"></a><span class="co"> * memoria en forma dinámica en el Heap.</span></span>
-<span id="cb23-15"><a href="#cb23-15"></a><span class="co"> * Retorna un puntero sin tipo, que indica</span></span>
-<span id="cb23-16"><a href="#cb23-16"></a><span class="co"> * una dirección de memoria sobre cuyo contenido</span></span>
-<span id="cb23-17"><a href="#cb23-17"></a><span class="co"> * no se tiene ninguna información.</span></span>
-<span id="cb23-18"><a href="#cb23-18"></a><span class="co"> */</span></span>
-<span id="cb23-19"><a href="#cb23-19"></a>    <span class="dt">void</span> <span class="op">*</span> malloc<span class="op">(</span><span class="dt">size_t</span> size<span class="op">);</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co">/* Una rutina de servicio de interrupción</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="co"> * es llamada por hardware. No puede recibir</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="co"> * parámetros ni retornar valor (pues no hay</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="co"> * quien lo reciba).</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="co"> */</span> </span>
+<span id="cb24-7"><a href="#cb24-7"></a>   <span class="dt">void</span> SysTick_Handler<span class="op">(</span><span class="dt">void</span><span class="op">){...}</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="co">/*   ↑                    ↑</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="co"> *   │                    └ No acepta argumentos</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="co"> *   └───────────────────────── No retorna valor</span></span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="co"> */</span></span>
+<span id="cb24-12"><a href="#cb24-12"></a></span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="co">/* Función de librería estándar que reserva</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a><span class="co"> * memoria en forma dinámica en el Heap.</span></span>
+<span id="cb24-15"><a href="#cb24-15"></a><span class="co"> * Retorna un puntero sin tipo, que indica</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a><span class="co"> * una dirección de memoria sobre cuyo contenido</span></span>
+<span id="cb24-17"><a href="#cb24-17"></a><span class="co"> * no se tiene ninguna información.</span></span>
+<span id="cb24-18"><a href="#cb24-18"></a><span class="co"> */</span></span>
+<span id="cb24-19"><a href="#cb24-19"></a>    <span class="dt">void</span> <span class="op">*</span> malloc<span class="op">(</span><span class="dt">size_t</span> size<span class="op">);</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -929,24 +943,80 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Tipos enteros</strong></pre>
 </div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">// Tipo lógico. Solo toma valores 0 (falso) y 1(verdadero). En ARM 8 bits</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="dt">_Bool</span> flag<span class="op">=</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="co">// Tipos de caracter. Enteros de al menos 8 bits. En ARM 8 bits</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="dt">char</span> caracter<span class="op">=</span><span class="ch">'A'</span><span class="op">;</span> <span class="co">// usado para representar caracteres.</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a><span class="dt">signed</span> <span class="dt">char</span> x<span class="op">=</span><span class="dv">123</span><span class="op">;</span> <span class="co">// con signo</span></span>
-<span id="cb24-6"><a href="#cb24-6"></a><span class="dt">unsigned</span> <span class="dt">char</span> y<span class="op">=</span><span class="bn">0b11011001</span><span class="op">;</span> <span class="co">// sin signo</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a><span class="co">// Enteros cortos, al menos 16 bits. En ARM 16 bits</span></span>
-<span id="cb24-8"><a href="#cb24-8"></a><span class="dt">signed</span> <span class="dt">short</span> <span class="dt">int</span> A<span class="op">=</span><span class="dv">23</span><span class="op">;</span> <span class="co">// Sinónimos: signed short, short, short int</span></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="dt">unsigned</span> <span class="dt">short</span> <span class="dt">int</span> B<span class="op">=</span><span class="dv">52300</span><span class="bu">U</span><span class="op">;</span> <span class="co">// sin signo. Sinónimo: unsigned short</span></span>
-<span id="cb24-10"><a href="#cb24-10"></a><span class="co">// Enteros. Al menos 16 bits. En ARM 32 bits</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a><span class="dt">signed</span> <span class="dt">int</span> C<span class="op">=-</span><span class="dv">19384</span><span class="op">;</span> <span class="co">// Sinónimos: int, signed</span></span>
-<span id="cb24-12"><a href="#cb24-12"></a><span class="dt">unsigned</span> <span class="dt">int</span> D<span class="op">=</span><span class="bn">0x1234</span><span class="bu">U</span><span class="op">;</span> <span class="co">// sin signo. Sinónimo: unsigned</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="co">// Enteros largos. Al menos 32 bits. En ARM 32 bits</span></span>
-<span id="cb24-14"><a href="#cb24-14"></a><span class="dt">signed</span> <span class="dt">long</span> <span class="dt">int</span> E<span class="op">=</span><span class="dv">1293</span><span class="bu">L</span><span class="op">;</span> <span class="co">// Sinónimos: long int, signed long, long</span></span>
-<span id="cb24-15"><a href="#cb24-15"></a><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">int</span> F<span class="op">=</span><span class="dv">998310</span><span class="bu">LU</span><span class="op">;</span> <span class="co">// sin signo. Sinónimo: unsigned long</span></span>
-<span id="cb24-16"><a href="#cb24-16"></a><span class="co">// Enteros extendidos. Al menos 64 bits. En ARM 64 bits</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a><span class="dt">signed</span> <span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> G<span class="op">=</span><span class="dv">234102391304</span><span class="bu">LL</span><span class="op">;</span> <span class="co">// signed long long, long long</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> H<span class="op">=</span><span class="bn">0x0123456789ABCDEF</span><span class="bu">LLU</span><span class="op">;</span> <span class="co">// unsigned long long</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">// Tipo lógico. Solo toma valores 0 (falso) y 1(verdadero). En ARM 8 bits</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="dt">_Bool</span> flag<span class="op">=</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="co">// Tipos de caracter. Enteros de al menos 8 bits. En ARM 8 bits</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="dt">char</span> caracter<span class="op">=</span><span class="ch">'A'</span><span class="op">;</span> <span class="co">// usado para representar caracteres.</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="dt">signed</span> <span class="dt">char</span> x<span class="op">=</span><span class="dv">123</span><span class="op">;</span> <span class="co">// con signo</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a><span class="dt">unsigned</span> <span class="dt">char</span> y<span class="op">=</span><span class="bn">0b11011001</span><span class="op">;</span> <span class="co">// sin signo</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="co">// Enteros cortos, al menos 16 bits. En ARM 16 bits</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="dt">signed</span> <span class="dt">short</span> <span class="dt">int</span> A<span class="op">=</span><span class="dv">23</span><span class="op">;</span> <span class="co">// Sinónimos: signed short, short, short int</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a><span class="dt">unsigned</span> <span class="dt">short</span> <span class="dt">int</span> B<span class="op">=</span><span class="dv">52300</span><span class="bu">U</span><span class="op">;</span> <span class="co">// sin signo. Sinónimo: unsigned short</span></span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="co">// Enteros. Al menos 16 bits. En ARM 32 bits</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a><span class="dt">signed</span> <span class="dt">int</span> C<span class="op">=-</span><span class="dv">19384</span><span class="op">;</span> <span class="co">// Sinónimos: int, signed</span></span>
+<span id="cb25-12"><a href="#cb25-12"></a><span class="dt">unsigned</span> <span class="dt">int</span> D<span class="op">=</span><span class="bn">0x1234</span><span class="bu">U</span><span class="op">;</span> <span class="co">// sin signo. Sinónimo: unsigned</span></span>
+<span id="cb25-13"><a href="#cb25-13"></a><span class="co">// Enteros largos. Al menos 32 bits. En ARM 32 bits</span></span>
+<span id="cb25-14"><a href="#cb25-14"></a><span class="dt">signed</span> <span class="dt">long</span> <span class="dt">int</span> E<span class="op">=</span><span class="dv">1293</span><span class="bu">L</span><span class="op">;</span> <span class="co">// Sinónimos: long int, signed long, long</span></span>
+<span id="cb25-15"><a href="#cb25-15"></a><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">int</span> F<span class="op">=</span><span class="dv">998310</span><span class="bu">LU</span><span class="op">;</span> <span class="co">// sin signo. Sinónimo: unsigned long</span></span>
+<span id="cb25-16"><a href="#cb25-16"></a><span class="co">// Enteros extendidos. Al menos 64 bits. En ARM 64 bits</span></span>
+<span id="cb25-17"><a href="#cb25-17"></a><span class="dt">signed</span> <span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> G<span class="op">=</span><span class="dv">234102391304</span><span class="bu">LL</span><span class="op">;</span> <span class="co">// signed long long, long long</span></span>
+<span id="cb25-18"><a href="#cb25-18"></a><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> <span class="dt">int</span> H<span class="op">=</span><span class="bn">0x0123456789ABCDEF</span><span class="bu">LLU</span><span class="op">;</span> <span class="co">// unsigned long long</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>El compilador de C acepta las siguientes constantes numéricas enteras:</p>
+<ul>
+<li><strong>Binario:</strong> indicado con el prefijo <code>0b</code>. Ej. <code>0b111010011</code><br>
+</li>
+<li><strong>Octal (base 8):</strong> indicado anteponiendo un cero. Ej. <code>0723</code>.</li>
+<li><strong>Decimal:</strong> un número decimal <em>sin ceros a la izquierda</em>. Ej. <code>467</code>.</li>
+<li><strong>Hexadecimal:</strong> indicado con el prefijo <code>0x</code>. Ej. <code>0x1d3</code> o <code>0x1D3</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Para indicar el tipo del entero se usan sufijos, que pueden ubicarse en cualquier orden.</p>
+<ul>
+<li>Sin sufijos es un tipo <code>int</code> (entero con signo de al menos 16 bit, en ARM 32 bit).</li>
+<li>Sufijo <code>U</code> o <code>u</code> indica <code>unsigned</code> (entero sin signo).</li>
+<li>Sufijo <code>L</code> o <code>l</code> indica <code>long</code> (al menos 32 bit). <em>Usar siempre <code>L</code> para evitar confusión con el número uno <code>1</code>.</em></li>
+<li>Sufijo <code>LL</code> o <code>ll</code> indica <code>long long</code> (al menos 64 bit). <em>Usar siempre <code>LL</code> para evitar confusión con el número uno <code>1</code>.</em></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Constantes enteras</strong></pre>
+</div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1"></a><span class="dt">int</span> A<span class="op">=</span><span class="bn">0b111010011</span><span class="op">,</span>B<span class="op">=</span><span class="bn">0773</span><span class="op">,</span>C<span class="op">=</span><span class="dv">467</span><span class="op">,</span>D<span class="op">=</span><span class="bn">0x1d3</span><span class="op">,</span>E<span class="op">=-</span><span class="dv">1230</span><span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="dt">unsigned</span> u<span class="op">=</span><span class="bn">0x1123</span><span class="bu">U</span><span class="op">;</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="dt">long</span> x<span class="op">=</span><span class="dv">1922</span><span class="bu">L</span><span class="op">,</span> y<span class="op">=</span><span class="bn">0655733</span><span class="bu">L</span><span class="op">,</span> z<span class="op">=-</span><span class="dv">1923</span><span class="bu">L</span><span class="op">;</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="dt">unsigned</span> <span class="dt">long</span>  v<span class="op">=</span><span class="bn">0x12345678</span><span class="bu">LU</span><span class="op">;</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="dt">long</span> <span class="dt">long</span> w<span class="op">=-</span><span class="dv">80123456789</span><span class="bu">LL</span><span class="op">;</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="dt">unsigned</span> <span class="dt">long</span> <span class="dt">long</span> m<span class="op">=</span><span class="bn">0xDEADBEEFDEADBEEF</span><span class="bu">uLL</span><span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -955,12 +1025,26 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Tipos de punto flotante</strong></pre>
 </div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">// El soporte por hardware está en la unidad de punto flotante (FPU), no en el CPU</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="co">// Cortex-M3 no inclue FPU, Cortex-M4 Sí</span></span>
-<span id="cb25-3"><a href="#cb25-3"></a><span class="co">// Emulados por software, computacionalmente costoso</span></span>
-<span id="cb25-4"><a href="#cb25-4"></a><span class="dt">float</span> a <span class="op">=</span> <span class="fl">1.45e-45</span><span class="op">;</span> <span class="co">// Punto flotante de 32 bit</span></span>
-<span id="cb25-5"><a href="#cb25-5"></a><span class="dt">double</span> b <span class="op">=</span> <span class="fl">1.4535e-500</span><span class="op">;</span> <span class="co">// Punto flotante de 64 bit</span></span>
-<span id="cb25-6"><a href="#cb25-6"></a><span class="dt">long</span> <span class="dt">double</span> c <span class="op">=</span> <span class="fl">1.234204221</span><span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">// El soporte por hardware está en la unidad de punto flotante (FPU), no en el CPU</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co">// Cortex-M3 no inclue FPU, Cortex-M4 Sí</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co">// Emulados por software, computacionalmente costoso</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="dt">float</span> a <span class="op">=</span> <span class="fl">1.45e-45</span><span class="op">;</span> <span class="co">// Punto flotante de 32 bit</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="dt">double</span> b <span class="op">=</span> <span class="fl">1.4535e-500</span><span class="op">;</span> <span class="co">// Punto flotante de 64 bit</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="dt">long</span> <span class="dt">double</span> c <span class="op">=</span> <span class="fl">1.234204221</span><span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Si es necesario usar punto flotante y se requiere procesamiento rápido y/o bajo consumo, uno de los requerimientos a la hora de elegir un microcontrolador es que cuente con unidad de punto flotante (FPU).</p>
+<p>Si el rendimiento no es importante muchas veces es suficiente con el punto flotante emulado.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="enumeraciónes" class="slide level2">
@@ -973,16 +1057,29 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">// Si no se dan valores explícitamente</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co">// el primer elemento será cero y subsiguientes</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a><span class="co">// elementos toman el valor siguiente del elemento</span></span>
-<span id="cb26-4"><a href="#cb26-4"></a><span class="co">// anterior</span></span>
-<span id="cb26-5"><a href="#cb26-5"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a>    FUERA_DE_SERVICIO<span class="op">,</span>  <span class="co">// FUERA_DE_SERVICIO vale 0</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>    VERDE <span class="op">=</span> <span class="dv">10</span><span class="op">,</span>         <span class="co">// VERDE vale 10</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a>    AMARILLO<span class="op">,</span>           <span class="co">// AMARILLO vale 11</span></span>
-<span id="cb26-9"><a href="#cb26-9"></a>    ROJO<span class="op">,</span>               <span class="co">// ROJO vale 12</span></span>
-<span id="cb26-10"><a href="#cb26-10"></a><span class="op">}</span>EstadoSemaforo<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">// Si no se dan valores explícitamente</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co">// el primer elemento será cero y subsiguientes</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="co">// elementos toman el valor siguiente del elemento</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="co">// anterior</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>    FUERA_DE_SERVICIO<span class="op">,</span>  <span class="co">// FUERA_DE_SERVICIO vale 0</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>    VERDE <span class="op">=</span> <span class="dv">10</span><span class="op">,</span>         <span class="co">// VERDE vale 10</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>    AMARILLO<span class="op">,</span>           <span class="co">// AMARILLO vale 11</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>    ROJO<span class="op">,</span>               <span class="co">// ROJO vale 12</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="op">}</span>EstadoSemaforo<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Al definir una enumeración se crean constantes enteras para sus valores. Estas constantes son símbolos del compilador, no macros. Valen solo en el ámbito dentro del cual se definió la enumeración y pueden incorporarse en la información de depuración.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="estructuras" class="slide level2">
@@ -997,22 +1094,22 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">/*  ┌──── Palabra clave, indica que es un tipo estructura</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="co">    │         ┌ Etiqueta que se refiere a esta definición</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="co">    │         │     ┌──── Definición de struct Estructura</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="co">    ↓         ↓     ↓       */</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>  <span class="kw">struct</span> Estructura <span class="op">{</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a>      <span class="dt">int</span> miembro_1<span class="op">;</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a>      <span class="co">// Definición de estructura anónima (sin etiqueta)  </span></span>
-<span id="cb27-8"><a href="#cb27-8"></a>      <span class="kw">struct</span> <span class="op">{</span></span>
-<span id="cb27-9"><a href="#cb27-9"></a>          <span class="dt">long</span> parte_1<span class="op">;</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a>          <span class="dt">long</span> parte_2<span class="op">;</span></span>
-<span id="cb27-11"><a href="#cb27-11"></a>      <span class="op">}</span>miembro_2<span class="op">;</span></span>
-<span id="cb27-12"><a href="#cb27-12"></a>      <span class="co">// Los miembros pueden ser arreglos</span></span>
-<span id="cb27-13"><a href="#cb27-13"></a>      <span class="dt">char</span> miembro_3<span class="op">[</span><span class="dv">20</span><span class="op">];</span></span>
-<span id="cb27-14"><a href="#cb27-14"></a>      <span class="co">// Los miembros pueden ser punteros</span></span>
-<span id="cb27-15"><a href="#cb27-15"></a>      <span class="dt">unsigned</span> <span class="dt">long</span> <span class="op">*</span>miembro_4<span class="op">;</span></span>
-<span id="cb27-16"><a href="#cb27-16"></a>  <span class="op">}</span> var1<span class="op">,</span> <span class="op">*</span>var2<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">/*  ┌──── Palabra clave, indica que es un tipo estructura</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="co">    │         ┌ Etiqueta que se refiere a esta definición</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="co">    │         │     ┌──── Definición de struct Estructura</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="co">    ↓         ↓     ↓       */</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="kw">struct</span> Estructura <span class="op">{</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>      <span class="dt">int</span> miembro_1<span class="op">;</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>      <span class="co">// Definición de estructura anónima (sin etiqueta)  </span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>      <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb29-9"><a href="#cb29-9"></a>          <span class="dt">long</span> parte_1<span class="op">;</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a>          <span class="dt">long</span> parte_2<span class="op">;</span></span>
+<span id="cb29-11"><a href="#cb29-11"></a>      <span class="op">}</span>miembro_2<span class="op">;</span></span>
+<span id="cb29-12"><a href="#cb29-12"></a>      <span class="co">// Los miembros pueden ser arreglos</span></span>
+<span id="cb29-13"><a href="#cb29-13"></a>      <span class="dt">char</span> miembro_3<span class="op">[</span><span class="dv">20</span><span class="op">];</span></span>
+<span id="cb29-14"><a href="#cb29-14"></a>      <span class="co">// Los miembros pueden ser punteros</span></span>
+<span id="cb29-15"><a href="#cb29-15"></a>      <span class="dt">unsigned</span> <span class="dt">long</span> <span class="op">*</span>miembro_4<span class="op">;</span></span>
+<span id="cb29-16"><a href="#cb29-16"></a>  <span class="op">}</span> var1<span class="op">,</span> <span class="op">*</span>var2<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1021,24 +1118,24 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo (continuación)</strong></pre>
 </div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">// Define un tipo Estructura</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">typedef</span> <span class="kw">struct</span> Estructura Estructura<span class="op">;</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co">// Tipo Estructura</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a>Estructura var3<span class="op">;</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a><span class="co">// Equivalente</span></span>
-<span id="cb28-6"><a href="#cb28-6"></a><span class="kw">struct</span> Estructura var4<span class="op">;</span></span>
-<span id="cb28-7"><a href="#cb28-7"></a></span>
-<span id="cb28-8"><a href="#cb28-8"></a> <span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
-<span id="cb28-9"><a href="#cb28-9"></a>    var2 <span class="op">=</span> <span class="op">&amp;</span>var1<span class="op">;</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a>    <span class="co">// Acceso a miembros de estructura</span></span>
-<span id="cb28-11"><a href="#cb28-11"></a>    var1<span class="op">.</span>miembro_1 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb28-12"><a href="#cb28-12"></a>    var1<span class="op">.</span>miembro_2<span class="op">.</span>parte_1 <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
-<span id="cb28-13"><a href="#cb28-13"></a>    <span class="co">// Acceso a miembros desde puntero a estructura</span></span>
-<span id="cb28-14"><a href="#cb28-14"></a>    var2<span class="op">-&gt;</span>miembro_3<span class="op">[</span><span class="dv">5</span><span class="op">]=</span><span class="dv">4</span><span class="op">;</span></span>
-<span id="cb28-15"><a href="#cb28-15"></a>    <span class="co">// Forma equivalente (pero no usada). LOS PARÉNTESIS SON NECESARIOS</span></span>
-<span id="cb28-16"><a href="#cb28-16"></a>    <span class="op">(*</span>var2<span class="op">).</span>miembro_3<span class="op">[</span><span class="dv">6</span><span class="op">]=</span><span class="dv">5</span><span class="op">;</span></span>
-<span id="cb28-17"><a href="#cb28-17"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb28-18"><a href="#cb28-18"></a> <span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">// Define un tipo Estructura</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">typedef</span> <span class="kw">struct</span> Estructura Estructura<span class="op">;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co">// Tipo Estructura</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>Estructura var3<span class="op">;</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="co">// Equivalente</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="kw">struct</span> Estructura var4<span class="op">;</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a></span>
+<span id="cb30-8"><a href="#cb30-8"></a> <span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb30-9"><a href="#cb30-9"></a>    var2 <span class="op">=</span> <span class="op">&amp;</span>var1<span class="op">;</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a>    <span class="co">// Acceso a miembros de estructura</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a>    var1<span class="op">.</span>miembro_1 <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb30-12"><a href="#cb30-12"></a>    var1<span class="op">.</span>miembro_2<span class="op">.</span>parte_1 <span class="op">=</span> <span class="dv">4</span><span class="op">;</span></span>
+<span id="cb30-13"><a href="#cb30-13"></a>    <span class="co">// Acceso a miembros desde puntero a estructura</span></span>
+<span id="cb30-14"><a href="#cb30-14"></a>    var2<span class="op">-&gt;</span>miembro_3<span class="op">[</span><span class="dv">5</span><span class="op">]=</span><span class="dv">4</span><span class="op">;</span></span>
+<span id="cb30-15"><a href="#cb30-15"></a>    <span class="co">// Forma equivalente (pero no usada). LOS PARÉNTESIS SON NECESARIOS</span></span>
+<span id="cb30-16"><a href="#cb30-16"></a>    <span class="op">(*</span>var2<span class="op">).</span>miembro_3<span class="op">[</span><span class="dv">6</span><span class="op">]=</span><span class="dv">5</span><span class="op">;</span></span>
+<span id="cb30-17"><a href="#cb30-17"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb30-18"><a href="#cb30-18"></a> <span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1047,23 +1144,23 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Estructuras como valores</strong></pre>
 </div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Punto<span class="op">{</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>    <span class="dt">int</span> x<span class="op">,</span>y<span class="op">;</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a><span class="op">}</span> Punto<span class="op">;</span></span>
-<span id="cb29-4"><a href="#cb29-4"></a>Punto Punto_suma<span class="op">(</span>Punto a<span class="op">,</span>Punto b<span class="op">){</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a>    <span class="co">// a y b son copias (pasaje por valor)</span></span>
-<span id="cb29-6"><a href="#cb29-6"></a>    <span class="co">// Literal compuesto de tipo estructura</span></span>
-<span id="cb29-7"><a href="#cb29-7"></a>    <span class="cf">return</span> <span class="op">(</span>Punto<span class="op">){.</span>x <span class="op">=</span> a<span class="op">.</span>x <span class="op">+</span> b<span class="op">.</span>x<span class="op">,</span></span>
-<span id="cb29-8"><a href="#cb29-8"></a>                   <span class="op">.</span>y <span class="op">=</span> a<span class="op">.</span>y <span class="op">+</span> b<span class="op">.</span>y<span class="op">};</span></span>
-<span id="cb29-9"><a href="#cb29-9"></a><span class="op">}</span></span>
-<span id="cb29-10"><a href="#cb29-10"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
-<span id="cb29-11"><a href="#cb29-11"></a>    <span class="co">// inicialización</span></span>
-<span id="cb29-12"><a href="#cb29-12"></a>    Punto a<span class="op">={</span><span class="dv">1</span><span class="op">,</span><span class="dv">4</span><span class="op">},</span>c<span class="op">={</span><span class="dv">0</span><span class="op">};</span> <span class="co">// con lista</span></span>
-<span id="cb29-13"><a href="#cb29-13"></a>    Punto b<span class="op">={.</span>y<span class="op">=</span><span class="dv">7</span><span class="op">};</span>      <span class="co">// con designación</span></span>
-<span id="cb29-14"><a href="#cb29-14"></a>    <span class="co">// Miembros omitidos son inicializados a 0</span></span>
-<span id="cb29-15"><a href="#cb29-15"></a>    c <span class="op">=</span> Punto_suma<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span> <span class="co">// no altera a y b</span></span>
-<span id="cb29-16"><a href="#cb29-16"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb29-17"><a href="#cb29-17"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Punto<span class="op">{</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>    <span class="dt">int</span> x<span class="op">,</span>y<span class="op">;</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="op">}</span> Punto<span class="op">;</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>Punto Punto_suma<span class="op">(</span>Punto a<span class="op">,</span>Punto b<span class="op">){</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>    <span class="co">// a y b son copias (pasaje por valor)</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a>    <span class="co">// Literal compuesto de tipo estructura</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>    <span class="cf">return</span> <span class="op">(</span>Punto<span class="op">){.</span>x <span class="op">=</span> a<span class="op">.</span>x <span class="op">+</span> b<span class="op">.</span>x<span class="op">,</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>                   <span class="op">.</span>y <span class="op">=</span> a<span class="op">.</span>y <span class="op">+</span> b<span class="op">.</span>y<span class="op">};</span></span>
+<span id="cb31-9"><a href="#cb31-9"></a><span class="op">}</span></span>
+<span id="cb31-10"><a href="#cb31-10"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a>    <span class="co">// inicialización</span></span>
+<span id="cb31-12"><a href="#cb31-12"></a>    Punto a<span class="op">={</span><span class="dv">1</span><span class="op">,</span><span class="dv">4</span><span class="op">},</span>c<span class="op">={</span><span class="dv">0</span><span class="op">};</span> <span class="co">// con lista</span></span>
+<span id="cb31-13"><a href="#cb31-13"></a>    Punto b<span class="op">={.</span>y<span class="op">=</span><span class="dv">7</span><span class="op">};</span>      <span class="co">// con designación</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a>    <span class="co">// Miembros omitidos son inicializados a 0</span></span>
+<span id="cb31-15"><a href="#cb31-15"></a>    c <span class="op">=</span> Punto_suma<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span> <span class="co">// no altera a y b</span></span>
+<span id="cb31-16"><a href="#cb31-16"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb31-17"><a href="#cb31-17"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1072,24 +1169,24 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Uso de punteros a estructura</strong></pre>
 </div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> MiEstado<span class="op">{</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>    <span class="dt">uint32_t</span> R<span class="op">[</span><span class="dv">16</span><span class="op">],</span> xpsr<span class="op">;</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="op">}</span> MiEstado<span class="op">;</span> <span class="co">// Ocupa 68 bytes</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="dt">void</span> muestraEstado_copia<span class="op">(</span>MiEstado e<span class="op">){</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a>    <span class="co">// Cada vez que se llama a esta función</span></span>
-<span id="cb30-6"><a href="#cb30-6"></a>    <span class="co">// se copian los 68 bytes!</span></span>
-<span id="cb30-7"><a href="#cb30-7"></a>    <span class="op">...</span></span>
-<span id="cb30-8"><a href="#cb30-8"></a><span class="op">}</span></span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="dt">void</span> muestraEstado_ptr<span class="op">(</span>MiEstado <span class="op">*</span>e<span class="op">){</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a>    <span class="co">// Esta función tiene acceso de escritura</span></span>
-<span id="cb30-11"><a href="#cb30-11"></a>    <span class="co">// al estado, es INSEGURO!</span></span>
-<span id="cb30-12"><a href="#cb30-12"></a>    <span class="op">...</span></span>
-<span id="cb30-13"><a href="#cb30-13"></a><span class="op">}</span></span>
-<span id="cb30-14"><a href="#cb30-14"></a><span class="dt">void</span> muestraEstado_cptr<span class="op">(</span><span class="dt">const</span> MiEstado <span class="op">*</span>e<span class="op">){</span></span>
-<span id="cb30-15"><a href="#cb30-15"></a>    <span class="co">// Es la mejor manera. Omite copiar el estado</span></span>
-<span id="cb30-16"><a href="#cb30-16"></a>    <span class="co">// pero lo proteje contra cambios imprevistos</span></span>
-<span id="cb30-17"><a href="#cb30-17"></a>    <span class="op">...</span></span>
-<span id="cb30-18"><a href="#cb30-18"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> MiEstado<span class="op">{</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>    <span class="dt">uint32_t</span> R<span class="op">[</span><span class="dv">16</span><span class="op">],</span> xpsr<span class="op">;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="op">}</span> MiEstado<span class="op">;</span> <span class="co">// Ocupa 68 bytes</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="dt">void</span> muestraEstado_copia<span class="op">(</span>MiEstado e<span class="op">){</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a>    <span class="co">// Cada vez que se llama a esta función</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a>    <span class="co">// se copian los 68 bytes!</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>    <span class="op">...</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="op">}</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a><span class="dt">void</span> muestraEstado_ptr<span class="op">(</span>MiEstado <span class="op">*</span>e<span class="op">){</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a>    <span class="co">// Esta función tiene acceso de escritura</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a>    <span class="co">// al estado, es INSEGURO!</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>    <span class="op">...</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a><span class="op">}</span></span>
+<span id="cb32-14"><a href="#cb32-14"></a><span class="dt">void</span> muestraEstado_cptr<span class="op">(</span><span class="dt">const</span> MiEstado <span class="op">*</span>e<span class="op">){</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>    <span class="co">// Es la mejor manera. Omite copiar el estado</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a>    <span class="co">// pero lo proteje contra cambios imprevistos</span></span>
+<span id="cb32-17"><a href="#cb32-17"></a>    <span class="op">...</span></span>
+<span id="cb32-18"><a href="#cb32-18"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="uniones" class="slide level2">
@@ -1104,18 +1201,18 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo (1/2)</strong></pre>
 </div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Var<span class="op">{</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>    <span class="kw">enum</span> <span class="op">{</span>ERROR<span class="op">,</span>NUM_16<span class="op">,</span>NUM_32<span class="op">,</span>NUM_64<span class="op">}</span> tipo<span class="op">;</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a>    <span class="co">// Si no se indica miembro, los miembros de la</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a>    <span class="co">// union se acceden como si fuesen miembros de</span></span>
-<span id="cb31-5"><a href="#cb31-5"></a>    <span class="co">// la estructura</span></span>
-<span id="cb31-6"><a href="#cb31-6"></a>    <span class="kw">union</span><span class="op">{</span></span>
-<span id="cb31-7"><a href="#cb31-7"></a>        <span class="kw">enum</span> CodigoError error<span class="op">;</span></span>
-<span id="cb31-8"><a href="#cb31-8"></a>        <span class="dt">int16_t</span> v16<span class="op">;</span></span>
-<span id="cb31-9"><a href="#cb31-9"></a>        <span class="dt">int32_t</span> v32<span class="op">;</span></span>
-<span id="cb31-10"><a href="#cb31-10"></a>        <span class="dt">int64_t</span> v64<span class="op">;</span></span>
-<span id="cb31-11"><a href="#cb31-11"></a>    <span class="op">};</span></span>
-<span id="cb31-12"><a href="#cb31-12"></a><span class="op">}</span> Var<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Var<span class="op">{</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>    <span class="kw">enum</span> <span class="op">{</span>ERROR<span class="op">,</span>NUM_16<span class="op">,</span>NUM_32<span class="op">,</span>NUM_64<span class="op">}</span> tipo<span class="op">;</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="co">// Si no se indica miembro, los miembros de la</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>    <span class="co">// union se acceden como si fuesen miembros de</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>    <span class="co">// la estructura</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>    <span class="kw">union</span><span class="op">{</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>        <span class="kw">enum</span> CodigoError error<span class="op">;</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>        <span class="dt">int16_t</span> v16<span class="op">;</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a>        <span class="dt">int32_t</span> v32<span class="op">;</span></span>
+<span id="cb33-10"><a href="#cb33-10"></a>        <span class="dt">int64_t</span> v64<span class="op">;</span></span>
+<span id="cb33-11"><a href="#cb33-11"></a>    <span class="op">};</span></span>
+<span id="cb33-12"><a href="#cb33-12"></a><span class="op">}</span> Var<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1124,32 +1221,74 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejempo (2/2)</strong></pre>
 </div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a>Var recibe_elemento<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>    Var r<span class="op">;</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a>    recibe_bytes<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>r<span class="op">.</span>tipo<span class="op">),&amp;</span>r<span class="op">.</span>tipo<span class="op">);</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a>    <span class="cf">switch</span><span class="op">(</span>r<span class="op">.</span>tipo<span class="op">){</span></span>
-<span id="cb32-5"><a href="#cb32-5"></a>    <span class="cf">case</span> ERROR<span class="op">:</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a>        recibe_bytes<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>r<span class="op">.</span>error<span class="op">),&amp;</span>r<span class="op">.</span>error<span class="op">);</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">case</span> NUM_16<span class="op">:</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a>        recibe_bytes<span class="op">(</span><span class="dv">2</span><span class="op">,&amp;</span>r<span class="op">.</span>v16<span class="op">);</span></span>
-<span id="cb32-9"><a href="#cb32-9"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">case</span> NUM_32<span class="op">:</span></span>
-<span id="cb32-10"><a href="#cb32-10"></a>        recibe_bytes<span class="op">(</span><span class="dv">4</span><span class="op">,&amp;</span>r<span class="op">.</span>v32<span class="op">);</span></span>
-<span id="cb32-11"><a href="#cb32-11"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">case</span> NUM_64<span class="op">:</span></span>
-<span id="cb32-12"><a href="#cb32-12"></a>        recibe_bytes<span class="op">(</span><span class="dv">8</span><span class="op">,&amp;</span>r<span class="op">.</span>v64<span class="op">);</span></span>
-<span id="cb32-13"><a href="#cb32-13"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">default</span><span class="op">:</span></span>
-<span id="cb32-14"><a href="#cb32-14"></a>        r<span class="op">.</span>tipo <span class="op">=</span> ERROR<span class="op">;</span></span>
-<span id="cb32-15"><a href="#cb32-15"></a>        r<span class="op">.</span>error <span class="op">=</span> MENSAJE_NO_VALIDO<span class="op">;</span></span>
-<span id="cb32-16"><a href="#cb32-16"></a>    <span class="op">}</span></span>
-<span id="cb32-17"><a href="#cb32-17"></a>    <span class="cf">return</span> r<span class="op">;</span></span>
-<span id="cb32-18"><a href="#cb32-18"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1"></a>Var recibe_elemento<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>    Var r<span class="op">;</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>    recibe_bytes<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>r<span class="op">.</span>tipo<span class="op">),&amp;</span>r<span class="op">.</span>tipo<span class="op">);</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a>    <span class="cf">switch</span><span class="op">(</span>r<span class="op">.</span>tipo<span class="op">){</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>    <span class="cf">case</span> ERROR<span class="op">:</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>        recibe_bytes<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>r<span class="op">.</span>error<span class="op">),&amp;</span>r<span class="op">.</span>error<span class="op">);</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">case</span> NUM_16<span class="op">:</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>        recibe_bytes<span class="op">(</span><span class="dv">2</span><span class="op">,&amp;</span>r<span class="op">.</span>v16<span class="op">);</span></span>
+<span id="cb34-9"><a href="#cb34-9"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">case</span> NUM_32<span class="op">:</span></span>
+<span id="cb34-10"><a href="#cb34-10"></a>        recibe_bytes<span class="op">(</span><span class="dv">4</span><span class="op">,&amp;</span>r<span class="op">.</span>v32<span class="op">);</span></span>
+<span id="cb34-11"><a href="#cb34-11"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">case</span> NUM_64<span class="op">:</span></span>
+<span id="cb34-12"><a href="#cb34-12"></a>        recibe_bytes<span class="op">(</span><span class="dv">8</span><span class="op">,&amp;</span>r<span class="op">.</span>v64<span class="op">);</span></span>
+<span id="cb34-13"><a href="#cb34-13"></a>    <span class="cf">break</span><span class="op">;</span><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb34-14"><a href="#cb34-14"></a>        r<span class="op">.</span>tipo <span class="op">=</span> ERROR<span class="op">;</span></span>
+<span id="cb34-15"><a href="#cb34-15"></a>        r<span class="op">.</span>error <span class="op">=</span> MENSAJE_NO_VALIDO<span class="op">;</span></span>
+<span id="cb34-16"><a href="#cb34-16"></a>    <span class="op">}</span></span>
+<span id="cb34-17"><a href="#cb34-17"></a>    <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb34-18"><a href="#cb34-18"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tipo-función" class="slide level2">
 <h2>Tipo función</h2>
-<p>Las funciones son los objetos que contienen el código ejecutable del programa. Su tipo define la interfaz entre el código que contienen y el resto del programa. Cuando se declara una función esto no reserva memoria alguna, sino que indica al compilador que en algún lado existe una definición de función con el mismo nombre que contiene código ejecutable, e indica como interactuar con ese código.</p>
+<p>Las funciones son los objetos que contienen el código ejecutable del programa. Su tipo define la interfaz entre el código que contienen y el resto del programa. Cuando se declara una función esto no reserva memoria alguna, sino que indica al compilador que existe una definición de función con el mismo nombre que contiene código ejecutable, e indica como interactuar con ese código.</p>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>En el caso de las funciones inline, la definición toma el lugar de la declaración y hay una declaración en el punto donde sería la definición.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="llamado-a-función" class="slide level2">
+<h2>Llamado a función</h2>
+<p>Para hacer uso de una función se emplea una expresión de llamado a función. Dicha expresión consiste en el identificador (nombre) seguido de la lista de parámetros entre paréntesis. Los paréntesis indican que es un llamado a función. En caso de que la función no acepte parámetros debe usarse una lista vacía “<code>()</code>”.</p>
 </section>
 <section class="slide level2">
 
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Ejemplo</strong></pre>
+</div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">  </span><span class="co">// puts, fputs, stderr, EOF</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span><span class="pp"> </span><span class="co">// exit</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="dt">static</span> <span class="dt">void</span> decir_hola<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>    <span class="co">// Llamado a puts, acepta un parámetro y retorna un valor entero</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a>    <span class="dt">const</span> <span class="dt">int</span> resultado <span class="op">=</span> puts<span class="op">(</span><span class="st">"Hola Mundo!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>    <span class="cf">if</span> <span class="op">(</span>resultado <span class="op">==</span> EOF<span class="op">){</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>        <span class="co">// El valor retornado por fputs es ignorado.</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a>        fputs<span class="op">(</span><span class="st">"Error al escribir en STDOUT</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span>stderr<span class="op">);</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>        exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb35-10"><a href="#cb35-10"></a>    <span class="op">}</span></span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="op">}</span></span>
+<span id="cb35-12"><a href="#cb35-12"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb35-13"><a href="#cb35-13"></a><span class="op">{</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a>    <span class="co">// decir_hola no acepta parámetros ni retorna valor. Los paréntesis</span></span>
+<span id="cb35-15"><a href="#cb35-15"></a>    <span class="co">// vacíos indican que es un llamado a función y son necesarios.</span></span>
+<span id="cb35-16"><a href="#cb35-16"></a>    decir_hola<span class="op">();</span></span>
+<span id="cb35-17"><a href="#cb35-17"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="declaración-de-funciones" class="slide level2">
+<h2>Declaración de funciones</h2>
 <p>El tipo función es una clase de tipo derivado, donde el tipo base identifica el tipo retornado por la función, y además se especifican otros tipos que corresponden a los argumentos de la función. Un declarador de función se construye ubicando una lista de argumentos entre paréntesis a la derecha del identificador. Si una función no retorna valor su tipo base debe ser <em>void</em>. Y si no acepta argumentos la lista de argumentos debe contener solo uno, de tipo <em>void</em>.</p>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1171,19 +1310,19 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1"></a>  <span class="dt">int</span> f1<span class="op">(</span><span class="dt">void</span><span class="op">),</span> f2<span class="op">(</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">);</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="co">/*─── ────────  ─────────── </span></span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="co"> * ↑  ↑         ↑</span></span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="co"> * │  │         └ Declarador de función que</span></span>
-<span id="cb33-5"><a href="#cb33-5"></a><span class="co"> * │  │           acepta dos argumentos enteros</span></span>
-<span id="cb33-6"><a href="#cb33-6"></a><span class="co"> * │  │           y retorna un valor entero</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a><span class="co"> * │  │</span></span>
-<span id="cb33-8"><a href="#cb33-8"></a><span class="co"> * │  └──── Declarador de función que no acepta</span></span>
-<span id="cb33-9"><a href="#cb33-9"></a><span class="co"> * │        argumentos y retorna un valor entero</span></span>
-<span id="cb33-10"><a href="#cb33-10"></a><span class="co"> * │</span></span>
-<span id="cb33-11"><a href="#cb33-11"></a><span class="co"> * └───── Tipo base entero, determina el tipo de</span></span>
-<span id="cb33-12"><a href="#cb33-12"></a><span class="co"> *        valor retornado.</span></span>
-<span id="cb33-13"><a href="#cb33-13"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a>  <span class="dt">int</span> f1<span class="op">(</span><span class="dt">void</span><span class="op">),</span> f2<span class="op">(</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">);</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="co">/*─── ────────  ─────────── </span></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="co"> * ↑  ↑         ↑</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="co"> * │  │         └ Declarador de función que</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="co"> * │  │           acepta dos argumentos enteros</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="co"> * │  │           y retorna un valor entero</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a><span class="co"> * │  │</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a><span class="co"> * │  └──── Declarador de función que no acepta</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a><span class="co"> * │        argumentos y retorna un valor entero</span></span>
+<span id="cb36-10"><a href="#cb36-10"></a><span class="co"> * │</span></span>
+<span id="cb36-11"><a href="#cb36-11"></a><span class="co"> * └───── Tipo base entero, determina el tipo de</span></span>
+<span id="cb36-12"><a href="#cb36-12"></a><span class="co"> *        valor retornado.</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1205,19 +1344,19 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Opc_ResultadoDiv<span class="op">{</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>    <span class="dt">bool</span> es_resultado<span class="op">;</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a>    <span class="dt">int</span> cociente<span class="op">;</span></span>
-<span id="cb34-4"><a href="#cb34-4"></a>    <span class="dt">int</span> resto<span class="op">;</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a><span class="op">}</span> Opc_ResultadoDiv<span class="op">;</span></span>
-<span id="cb34-6"><a href="#cb34-6"></a></span>
-<span id="cb34-7"><a href="#cb34-7"></a>Opc_ResultadoDiv dividir<span class="op">(</span><span class="dt">int</span> numerador<span class="op">,</span><span class="dt">int</span> denominador<span class="op">);</span></span>
-<span id="cb34-8"><a href="#cb34-8"></a><span class="co">/*</span></span>
-<span id="cb34-9"><a href="#cb34-9"></a><span class="co"> * Declaración de una función dividir que  acepta dos</span></span>
-<span id="cb34-10"><a href="#cb34-10"></a><span class="co"> * argumentos enteros y retorna un valor tipo estructura</span></span>
-<span id="cb34-11"><a href="#cb34-11"></a><span class="co"> * El nombre dado a los argumentos es opcional, pero</span></span>
-<span id="cb34-12"><a href="#cb34-12"></a><span class="co"> * recomendable por claridad</span></span>
-<span id="cb34-13"><a href="#cb34-13"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> Opc_ResultadoDiv<span class="op">{</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>    <span class="dt">bool</span> es_resultado<span class="op">;</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>    <span class="dt">int</span> cociente<span class="op">;</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>    <span class="dt">int</span> resto<span class="op">;</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="op">}</span> Opc_ResultadoDiv<span class="op">;</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a></span>
+<span id="cb37-7"><a href="#cb37-7"></a>Opc_ResultadoDiv dividir<span class="op">(</span><span class="dt">int</span> numerador<span class="op">,</span><span class="dt">int</span> denominador<span class="op">);</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a><span class="co">/*</span></span>
+<span id="cb37-9"><a href="#cb37-9"></a><span class="co"> * Declaración de una función dividir que  acepta dos</span></span>
+<span id="cb37-10"><a href="#cb37-10"></a><span class="co"> * argumentos enteros y retorna un valor tipo estructura</span></span>
+<span id="cb37-11"><a href="#cb37-11"></a><span class="co"> * El nombre dado a los argumentos es opcional, pero</span></span>
+<span id="cb37-12"><a href="#cb37-12"></a><span class="co"> * recomendable por claridad</span></span>
+<span id="cb37-13"><a href="#cb37-13"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1240,13 +1379,13 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplo</strong></pre>
 </div>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="dt">static</span> <span class="dt">int</span> func1<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">char</span> b<span class="op">);</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>    <span class="cf">return</span> func1<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">3</span><span class="op">);</span></span>
-<span id="cb35-4"><a href="#cb35-4"></a><span class="op">}</span></span>
-<span id="cb35-5"><a href="#cb35-5"></a><span class="dt">static</span> <span class="dt">int</span> func1<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
-<span id="cb35-6"><a href="#cb35-6"></a>    <span class="cf">return</span> <span class="op">(</span>b<span class="op">-</span>a<span class="op">)*(</span>b<span class="op">+</span>a<span class="op">);</span></span>
-<span id="cb35-7"><a href="#cb35-7"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1"></a><span class="dt">static</span> <span class="dt">int</span> func1<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">char</span> b<span class="op">);</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>    <span class="cf">return</span> func1<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">3</span><span class="op">);</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="op">}</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="dt">static</span> <span class="dt">int</span> func1<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a>    <span class="cf">return</span> <span class="op">(</span>b<span class="op">-</span>a<span class="op">)*(</span>b<span class="op">+</span>a<span class="op">);</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-caution callout-captioned callout-style-default">
 <div class="callout-body">
@@ -1305,29 +1444,170 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>ejemplo.h</strong></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="pp">#ifndef EJEMPLO_H</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="pp">#define EJEMPLO_H</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a></span>
-<span id="cb36-4"><a href="#cb36-4"></a><span class="dt">int</span> fn_normal<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">);</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a></span>
-<span id="cb36-6"><a href="#cb36-6"></a><span class="kw">inline</span> <span class="dt">int</span> fn_inline<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">)</span></span>
-<span id="cb36-7"><a href="#cb36-7"></a><span class="op">{</span></span>
-<span id="cb36-8"><a href="#cb36-8"></a>    <span class="cf">return</span> a<span class="op">-</span>b<span class="op">;</span></span>
-<span id="cb36-9"><a href="#cb36-9"></a><span class="op">}</span></span>
-<span id="cb36-10"><a href="#cb36-10"></a><span class="pp">#endif</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1"></a><span class="pp">#ifndef EJEMPLO_H</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="pp">#define EJEMPLO_H</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="dt">int</span> fn_normal<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">);</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a></span>
+<span id="cb39-6"><a href="#cb39-6"></a><span class="kw">inline</span> <span class="dt">int</span> fn_inline<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">)</span></span>
+<span id="cb39-7"><a href="#cb39-7"></a><span class="op">{</span></span>
+<span id="cb39-8"><a href="#cb39-8"></a>    <span class="cf">return</span> a<span class="op">-</span>b<span class="op">;</span></span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="op">}</span></span>
+<span id="cb39-10"><a href="#cb39-10"></a><span class="pp">#endif</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>ejemplo.c</strong></pre>
 </div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1"></a><span class="pp">#include </span><span class="im">"ejemplo.h"</span><span class="pp"> </span><span class="co">// Este módulo</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a></span>
-<span id="cb37-3"><a href="#cb37-3"></a><span class="dt">int</span> fn_normal<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
-<span id="cb37-4"><a href="#cb37-4"></a>    <span class="cf">return</span> a<span class="op">*</span>b<span class="op">;</span></span>
-<span id="cb37-5"><a href="#cb37-5"></a><span class="op">}</span></span>
-<span id="cb37-6"><a href="#cb37-6"></a></span>
-<span id="cb37-7"><a href="#cb37-7"></a><span class="co">// En este caso extern es necesario.</span></span>
-<span id="cb37-8"><a href="#cb37-8"></a><span class="kw">extern</span> <span class="kw">inline</span> <span class="dt">int</span> fn_inline<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">);</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1"></a><span class="pp">#include </span><span class="im">"ejemplo.h"</span><span class="pp"> </span><span class="co">// Este módulo</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="dt">int</span> fn_normal<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>    <span class="cf">return</span> a<span class="op">*</span>b<span class="op">;</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="op">}</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a></span>
+<span id="cb40-7"><a href="#cb40-7"></a><span class="co">// En este caso extern es necesario.</span></span>
+<span id="cb40-8"><a href="#cb40-8"></a><span class="kw">extern</span> <span class="kw">inline</span> <span class="dt">int</span> fn_inline<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">);</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="arreglos" class="slide level2">
+<h2>Arreglos</h2>
+<p>Un arreglo es un tipo de datos compuesto que contiene varias instancias del tipo de dato base dispuestas en forma contigua en memoria. El declarador de arreglo es indicado por un par de corchetes a la derecha del resto del declarador. Dentro de los corchetes se indica el número de elementos del arreglo. Un arreglo reserva memoria para todos sus elementos.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Ejemplo</strong></pre>
+</div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1"></a>  <span class="dt">int</span> var1<span class="op">[</span><span class="dv">5</span><span class="op">],</span> var2<span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">2</span><span class="op">];</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="co">/*</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="co">   * El especificador de tipo base es entero (int)</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="co">   * var1 es un arreglo de 5 enteros</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a><span class="co">   * var2 es un arreglo de 3 arreglos de 2 enteros.</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a><span class="co">   *      Lo que puede considerarse un arreglo</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a><span class="co">   *      bidimensional de 3x2 enteros.</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a><span class="co">   */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
+<p>Disposición en memoria arreglos en el ejemplo</p>
+
+<img data-src="memoria_arreglos.png" class="r-stretch quarto-figure-center"><p class="caption">Nota: <code>&amp;x</code> produce la dirección de <code>x</code> y <code>&amp;x[1]</code> equivale a <code>&amp;(x[1])</code></p></section>
+<section id="limitaciones" class="slide level2">
+<h2>Limitaciones</h2>
+<ul>
+<li>No pueden declararse arreglos de funciones (pero sí de punteros a funciones).</li>
+<li>Una función no puede retornar un tipo arreglo (aunque sí una estructura conteniendo un arreglo).</li>
+<li>Se puede indicar un arreglo como parámetro de una función, pero en ese caso no se copiará el arreglo por valor sino que se pasará puntero al primer elemento del mismo.</li>
+</ul>
+</section>
+<section id="indexado" class="slide level2">
+<h2>Indexado</h2>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Ejemplo</strong></pre>
+</div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1"></a><span class="dt">int</span>  A<span class="op">[</span><span class="dv">5</span><span class="op">]={</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span><span class="op">};</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="dt">int</span> primer_elemento_de_A<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a>    <span class="cf">return</span> A<span class="op">[</span><span class="dv">0</span><span class="op">];</span> <span class="co">// Comienza de 0</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="op">}</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="dt">int</span> segundo_elemento_de_A<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a>    <span class="cf">return</span> A<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb42-8"><a href="#cb42-8"></a><span class="op">}</span></span>
+<span id="cb42-9"><a href="#cb42-9"></a><span class="dt">int</span> <span class="op">*</span> direccion_de_A<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb42-10"><a href="#cb42-10"></a>    <span class="cf">return</span> A<span class="op">;</span> <span class="co">// Sin corchete!</span></span>
+<span id="cb42-11"><a href="#cb42-11"></a><span class="op">}</span></span>
+<span id="cb42-12"><a href="#cb42-12"></a><span class="dt">int</span> <span class="op">*</span> direccion_quinto_elemento_de_A<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb42-13"><a href="#cb42-13"></a>    <span class="cf">return</span> <span class="op">&amp;</span>A<span class="op">[</span><span class="dv">4</span><span class="op">];</span></span>
+<span id="cb42-14"><a href="#cb42-14"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="arreglos-como-parámetros-de-funciones" class="slide level2">
+<h2>Arreglos como parámetros de funciones</h2>
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1"></a><span class="co">// Las dos declaraciones son equivalentes</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="co">// Nota: Hay que especificar la longitud!</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="dt">uint32_t</span> suma<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> numeros<span class="op">[]);</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="dt">uint32_t</span> suma<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>numeros<span class="op">);</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="co">// Arreglos de longitud variable (VLA), solo como parámetros o variables automáticas.</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="dt">void</span> matmul<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span><span class="dt">int</span> k<span class="op">,</span><span class="dt">int</span> m<span class="op">,</span></span>
+<span id="cb43-7"><a href="#cb43-7"></a>    <span class="dt">int</span> <span class="dt">const</span> A<span class="op">[</span>n<span class="op">][</span>k<span class="op">],</span> <span class="dt">int</span> <span class="dt">const</span> B<span class="op">[</span>k<span class="op">][</span>m<span class="op">],</span> <span class="dt">int</span> R<span class="op">[</span>k<span class="op">][</span>m<span class="op">]);</span></span>
+<span id="cb43-8"><a href="#cb43-8"></a><span class="co">// Esta forma es equivalente</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a><span class="dt">void</span> matmul<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> k<span class="op">,</span> <span class="dt">int</span> m<span class="op">,</span></span>
+<span id="cb43-10"><a href="#cb43-10"></a>    <span class="dt">int</span> <span class="dt">const</span> <span class="op">(*</span>A<span class="op">)[</span>k<span class="op">],</span> <span class="dt">int</span> <span class="dt">const</span> <span class="op">(*</span>B<span class="op">)[</span>m<span class="op">],</span> <span class="dt">int</span> <span class="op">(*</span>R<span class="op">)[</span>m<span class="op">])</span></span>
+<span id="cb43-11"><a href="#cb43-11"></a><span class="op">{</span></span>
+<span id="cb43-12"><a href="#cb43-12"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> fila<span class="op">=</span><span class="dv">0</span><span class="op">;</span>fila<span class="op">&lt;</span>n<span class="op">;++</span>fila<span class="op">){</span></span>
+<span id="cb43-13"><a href="#cb43-13"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> col<span class="op">=</span><span class="dv">0</span><span class="op">;</span>col<span class="op">&lt;</span>n<span class="op">;++</span>col<span class="op">){</span></span>
+<span id="cb43-14"><a href="#cb43-14"></a>            R<span class="op">[</span>fila<span class="op">][</span>col<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb43-15"><a href="#cb43-15"></a>            <span class="cf">for</span> <span class="op">(</span>i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>k<span class="op">;++</span>i<span class="op">){</span></span>
+<span id="cb43-16"><a href="#cb43-16"></a>                R<span class="op">[</span>fila<span class="op">][</span>col<span class="op">]</span> <span class="op">+=</span> A<span class="op">[</span>fila<span class="op">][</span>k<span class="op">]*</span>B<span class="op">[</span>k<span class="op">][</span>col<span class="op">];</span></span>
+<span id="cb43-17"><a href="#cb43-17"></a>            <span class="op">}</span></span>
+<span id="cb43-18"><a href="#cb43-18"></a>        <span class="op">}</span></span>
+<span id="cb43-19"><a href="#cb43-19"></a>    <span class="op">}</span></span>
+<span id="cb43-20"><a href="#cb43-20"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="callout callout-caution callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Precaución</strong></p>
+</div>
+<div class="callout-content">
+<p>Los punteros se pueden indexar como si fuesen arreglos, sin embargo <strong>no son arreglos</strong>.<br>
+Si un puntero <code>P</code> apunta a un arreglo <code>A</code> entonces:</p>
+<p><strong>Similitudes</strong><br>
+<code>P</code> (valor del puntero) es igual a <code>A</code> (dirección del arreglo)<br>
+<code>P[n]</code> es equivalente a <code>A[n]</code> (tanto para leer como modificar)<br>
+<code>&amp;P[n]</code> es igual a <code>&amp;A[n]</code></p>
+<p><strong>Diferencias</strong><br>
+<code>&amp;P</code> es la dirección en memoria del puntero (<code>&amp;P != A</code>).<br>
+<code>&amp;A</code> es la dirección en memoria del arreglo (<code>&amp;A == &amp;A</code>).<br>
+<code>sizeof P</code> (tamaño en memoria de P) siempre es el tamaño de un puntero.<br>
+<code>sizeof A</code> (tamaño en memoria de A) es el espacio ocupado por A en memoria.<br>
+<code>A</code> es la <strong>dirección</strong> del arreglo y por lo tanto no puede modificarse.<br>
+<code>P</code> es el <strong>valor</strong> del puntero y sí puede modificarse.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Punteros no son arreglos</strong></pre>
+</div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span><span class="pp">  </span><span class="co">// puts</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span><span class="pp"> </span><span class="co">// assert</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="co">// assert(x) termina el programa con mensaje de error si x es falso</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="op">{</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a>    <span class="dt">int</span> A<span class="op">[]={</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">6</span><span class="op">,</span><span class="dv">7</span><span class="op">,</span><span class="dv">8</span><span class="op">,</span><span class="dv">9</span><span class="op">,</span><span class="dv">10</span><span class="op">,</span><span class="dv">11</span><span class="op">,</span><span class="dv">12</span><span class="op">};</span></span>
+<span id="cb44-7"><a href="#cb44-7"></a>    <span class="dt">int</span> <span class="op">*</span>B <span class="op">=</span> A<span class="op">;</span></span>
+<span id="cb44-8"><a href="#cb44-8"></a>    assert<span class="op">(</span>A <span class="op">==</span> B<span class="op">);</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;(</span><span class="kw">sizeof</span> A <span class="op">/</span> <span class="kw">sizeof</span> A<span class="op">[</span><span class="dv">0</span><span class="op">]);++</span>i<span class="op">){</span></span>
+<span id="cb44-10"><a href="#cb44-10"></a>        assert<span class="op">(</span>A<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> B<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb44-11"><a href="#cb44-11"></a>        assert<span class="op">(&amp;</span>A<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="op">&amp;</span>B<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb44-12"><a href="#cb44-12"></a>    <span class="op">}</span></span>
+<span id="cb44-13"><a href="#cb44-13"></a>    assert<span class="op">(&amp;</span>A <span class="op">!=</span> <span class="op">&amp;</span>B<span class="op">);</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a>    assert<span class="op">(</span><span class="kw">sizeof</span> A <span class="op">!=</span> <span class="kw">sizeof</span> B<span class="op">);</span></span>
+<span id="cb44-15"><a href="#cb44-15"></a>    puts<span class="op">(</span><span class="st">"Todas las pruebas pasadas!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb44-16"><a href="#cb44-16"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb44-17"><a href="#cb44-17"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<p>Puedes ejecutar una versión de este ejemplo <a href="https://onlinegdb.com/bJpZAEn_w">aquí</a>.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="punteros" class="slide level2">
@@ -1353,12 +1633,199 @@ Ferando Alberto Miranda Bonomi
 <div class="code-with-filename-file">
 <pre><strong>Ejemplos</strong></pre>
 </div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1"></a><span class="dt">int</span> x<span class="op">=</span><span class="dv">5</span><span class="op">,</span> <span class="op">*</span>a<span class="op">=&amp;</span>x<span class="op">,</span> <span class="op">**</span>b<span class="op">=&amp;</span>a<span class="op">,</span> <span class="op">***</span>c<span class="op">=&amp;</span>b<span class="op">;</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="co">/* x es una variable entero</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="co"> * a es una variable puntero a entero</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="co"> * b es una variable puntero a puntero a entero</span></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="co"> * c es una variable puntero a puntero a puntero a entero</span></span>
-<span id="cb38-6"><a href="#cb38-6"></a><span class="co"> */</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb45-1"><a href="#cb45-1"></a><span class="dt">int</span> x<span class="op">=</span><span class="dv">5</span><span class="op">,</span> <span class="op">*</span>a<span class="op">=&amp;</span>x<span class="op">,</span> <span class="op">**</span>b<span class="op">=&amp;</span>a<span class="op">,</span> <span class="op">***</span>c<span class="op">=&amp;</span>b<span class="op">;</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">/* x es una variable entero</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="co"> * a es una variable puntero a entero</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="co"> * b es una variable puntero a puntero a entero</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="co"> * c es una variable puntero a puntero a puntero a entero</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a><span class="co"> */</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a> <span class="dt">int</span> <span class="op">*</span>x<span class="op">[</span><span class="dv">4</span><span class="op">],</span> <span class="op">(*</span>y<span class="op">)[</span><span class="dv">6</span><span class="op">];</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a> <span class="co">// x es un arreglo de cuatro punteros a entero.</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a> <span class="co">// y es un puntero a arreglo de cuatro enteros.</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Notar en el ejemplo la diferencia entre x e y. La variable x almacena cuatro punteros a entero, mientras que y es un puntero a un arreglo de seis enteros.</p>
+<p><code>x[0]</code> es un puntero a entero.<br>
+<code>y[0]</code> es un arreglo de 4 enteros.</p>
+<p>La variable x contiene 4 punteros, por tanto su tamaño en memoria es el cuádruple de la variable y.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretando-declaraciones-complejas" class="slide level2">
+<h2>Interpretando declaraciones complejas</h2>
+<p>Para interpretar una declaración compleja comenzar por el <em>identificador</em> (nombre de lo que se está declarando) considerar primero lo que hay a su derecha, luego lo que hay a su izquierda. Cada vez que se resuelva una declaración entre paréntesis considerar nuevamente derecha, luego izquierda.</p>
+<p>Al evaluar cada parámetro de una decalración de función se procede de la misma manera.</p>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb46-1"><a href="#cb46-1"></a><span class="dt">int</span> <span class="dt">const</span> <span class="op">*</span>A<span class="op">(</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">);</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Identificador: <code>A</code> → <em><code>A</code> es…</em><br>
+Derecha: <code>(int,int)</code> → <em>…una función con dos parámetros enteros…</em><br>
+Izquierda: <code>*</code> → <em>…que retorna un puntero a…</em><br>
+Izquierda: <code>int const</code> → <em>…entero con signo de solo lectura.</em></p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Los calificadores <code>const</code> y <code>volatile</code> pueden ir a izquierda o derecha de un tipo base.<br>
+Pero <strong>si califican un puntero deben ir siempre a la derecha del asterisco</strong>.</p>
+<p>Si siempre se ponen a la derecha de lo que califican es más dificil confundirse.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb47"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb47-1"><a href="#cb47-1"></a><span class="dt">int</span> <span class="dt">const</span> <span class="op">(*</span>B<span class="op">(</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">))[</span><span class="dv">9</span><span class="op">][</span><span class="dv">3</span><span class="op">];</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Identificador: <code>B</code> → <em><code>B</code> es…</em><br>
+Derecha: <code>(int,int)</code> → <em>…una función con dos argumentos enteros…</em><br>
+Izquierda: <code>*</code> → <em>…que retorna un puntero a…</em><br>
+Fuera de los paréntesis:<br>
+Derecha: <code>[9]</code> → <em>…un arreglo de nueve…</em><br>
+Continuando derecha <code>[3]</code> → <em>…arreglos de tres…</em><br>
+Izquierda: <code>int</code> → <em>…enteros con signo.</em></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb48"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb48-1"><a href="#cb48-1"></a><span class="dt">void</span> <span class="op">(*</span> <span class="dt">const</span> ivecs<span class="op">[</span><span class="dv">16</span><span class="op">])(</span><span class="dt">void</span><span class="op">)</span> <span class="op">=</span> <span class="op">{</span>fn0<span class="op">,..,</span>fn15<span class="op">};</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Identificador: <code>ivecs</code> → <em><code>ivecs</code> es…</em><br>
+Derecha: <code>[16]</code> → <em>…un arreglo de dieciseis…</em><br>
+Izquieda: <code>* const</code> → <em>…punteros constantes a…</em><br>
+Fuera de los paréntesis:<br>
+Derecha: <code>(void)</code> → <em>…funciones que no aceptan argumentos…</em><br>
+Izquieda: <code>void</code> → <em>…y no retornan valor.</em></p>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Las variables de solo lectura (de tipo calificado por <code>const</code>) deben ser inicializadas en su definición (declaración que reserva la memoria).</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>En “<code>int const *A;</code>” la variable <code>A</code> no es calificada por <code>const</code>, sino la posición de memoria a la que apunta. Por eso no hace falta inicializarla al definir.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb49"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb49-1"><a href="#cb49-1"></a><span class="dt">void</span> <span class="op">(*</span><span class="dt">const</span> suma<span class="op">)(</span>Vector <span class="dt">const</span> <span class="op">*</span>self<span class="op">,</span><span class="dt">const</span> Vector <span class="op">*</span>otro<span class="op">,</span> Vector <span class="op">*</span>resultado<span class="op">)</span> <span class="op">=</span> misuma<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Identificador: <code>suma</code> → <em><code>suma</code> es…</em><br>
+Izquierda: <code>*const</code> → <em>…un puntero constante a…</em><br>
+Fuera de los paréntesis:<br>
+Derecha: <code>(Vector const *self,const Vector *otro, Vector *resultado)</code><br>
+→ <em>…función que acepta tres argumentos: dos punteros a constante tipo Vector (self y otro) y un puntero a tipo Vector (resultado); …</em><br>
+Izquierda: <code>void</code> → <em>…y no retorna valor.</em></p>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Como <code>suma</code> es un tipo <strong><em>calificado constante</em></strong>, debe ser inicializada al momento de su declaración.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb50"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb50-1"><a href="#cb50-1"></a><span class="kw">struct</span> Pin_VT<span class="op">{</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a>    <span class="dt">void</span> <span class="op">(*</span><span class="dt">const</span> modo_salida<span class="op">)(</span>Pin <span class="op">*);</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a>    <span class="dt">void</span> <span class="op">(*</span><span class="dt">const</span> modo_entrada<span class="op">)(</span>Pin <span class="op">*);</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a>    <span class="dt">void</span> <span class="op">(*</span><span class="dt">const</span> set_estado<span class="op">)(</span>Pin <span class="op">*,</span><span class="dt">bool</span><span class="op">);</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a>    <span class="dt">bool</span> <span class="op">(*</span><span class="dt">const</span> get_estado<span class="op">)(</span>Pin <span class="op">*);</span></span>
+<span id="cb50-6"><a href="#cb50-6"></a>    <span class="dt">bool</span> <span class="op">(*</span><span class="dt">const</span> get_entrada<span class="op">)(</span>Pin <span class="op">*);</span></span>
+<span id="cb50-7"><a href="#cb50-7"></a><span class="op">};</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>No hay identificador → <em>No declara ningún objeto, …</em><br>
+Izquierda: <code>struct Pin_VT{...}</code> → <em>…pero define una estructura de etiqueta <code>Pin_VT</code> cuyos miembros son: <code>modo_salida</code> y <code>modo_entrada</code>, dos punteros constantes a función que acepta un argumento puntero a <code>Pin</code> y no retorna valor; <code>set_estado</code>, un puntero constante a función que acepta un argumento puntero a <code>Pin</code>, un argumento tipo <code>bool</code> y no retorna valor; <code>get_estado</code> y <code>get_entrada</code>, dos punteros constantes a función que acepta un argumento puntero a <code>Pin</code> y retorna un valor tipo <code>bool</code>.</em></p>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb51"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb51-1"><a href="#cb51-1"></a><span class="kw">typedef</span> <span class="kw">enum</span> <span class="op">{</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>    PIN_IN_ANALOGICO <span class="op">=</span> <span class="bn">0b0000</span><span class="op">,</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a>    PIN_IN_FLOTANTE  <span class="op">=</span> <span class="bn">0b0100</span><span class="op">,</span></span>
+<span id="cb51-4"><a href="#cb51-4"></a>    PIN_IN_CON_PULL  <span class="op">=</span> <span class="bn">0b1000</span><span class="op">,</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a>    PIN_OUT_LENTO    <span class="op">=</span> <span class="bn">0b0010</span><span class="op">,</span></span>
+<span id="cb51-6"><a href="#cb51-6"></a>    PIN_OUT_MEDIO    <span class="op">=</span> <span class="bn">0b0001</span><span class="op">,</span></span>
+<span id="cb51-7"><a href="#cb51-7"></a>    PIN_OUT_RAPIDO   <span class="op">=</span> <span class="bn">0b0011</span><span class="op">,</span></span>
+<span id="cb51-8"><a href="#cb51-8"></a>    PIN_OUT_OD_LENTO <span class="op">=</span> <span class="bn">0b0110</span><span class="op">,</span></span>
+<span id="cb51-9"><a href="#cb51-9"></a>    PIN_OUT_OD_MEDIO <span class="op">=</span> <span class="bn">0b0101</span><span class="op">,</span></span>
+<span id="cb51-10"><a href="#cb51-10"></a>    PIN_OUT_OD_RAPIDO<span class="op">=</span> <span class="bn">0b0111</span><span class="op">,</span></span>
+<span id="cb51-11"><a href="#cb51-11"></a>    PIN_AFO_LENTO    <span class="op">=</span> <span class="bn">0b1010</span><span class="op">,</span></span>
+<span id="cb51-12"><a href="#cb51-12"></a>    PIN_AFO_MEDIO    <span class="op">=</span> <span class="bn">0b1001</span><span class="op">,</span></span>
+<span id="cb51-13"><a href="#cb51-13"></a>    PIN_AFO_RAPIDO   <span class="op">=</span> <span class="bn">0b1011</span><span class="op">,</span></span>
+<span id="cb51-14"><a href="#cb51-14"></a>    PIN_AFO_OD_LENTO <span class="op">=</span> <span class="bn">0b1110</span><span class="op">,</span></span>
+<span id="cb51-15"><a href="#cb51-15"></a>    PIN_AFO_OD_MEDIO <span class="op">=</span> <span class="bn">0b1101</span><span class="op">,</span></span>
+<span id="cb51-16"><a href="#cb51-16"></a>    PIN_AFO_OD_RAPIDO<span class="op">=</span> <span class="bn">0b1111</span></span>
+<span id="cb51-17"><a href="#cb51-17"></a><span class="op">}</span> ModoEntrada<span class="op">;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-none no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Identificador <code>ModoEntada</code> → <em><code>ModoEntrada</code> es…</em><br>
+Izquierda: <code>typedef enum {...}</code> → <em>un tipo definido por el usuario, equivalente a la enumeración anónima especificada (además, se definen las correspondientes constantes).</em></p>
+</div>
+</div>
 </div>
 <div class="footer footer-default">
 
