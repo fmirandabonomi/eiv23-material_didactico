@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.269">
 
   <meta name="author" content="Ferando Alberto Miranda Bonomi">
-  <meta name="dcterms.date" content="2023-04-24">
+  <meta name="dcterms.date" content="2023-04-25">
   <title>Lenguaje C</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -399,7 +399,7 @@ Ferando Alberto Miranda Bonomi
 </div>
 </div>
 
-  <p class="date">2023-04-24</p>
+  <p class="date">2023-04-25</p>
 </section>
 <section id="lenguaje-de-programación" class="slide level2">
 <h2>Lenguaje de programación</h2>
@@ -2063,6 +2063,61 @@ Izquierda: <code>typedef enum {...}</code> → <em>un tipo definido por el usuar
 </div>
 </div>
 </div>
+</section>
+<section id="inicializadores-de-arreglos-y-estructuras" class="slide level2">
+<h2>Inicializadores de arreglos y estructuras</h2>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Inicializadores</strong></pre>
+</div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb58-1"><a href="#cb58-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> MiStruct <span class="op">{</span><span class="dt">int</span> a<span class="op">;</span><span class="dt">int</span> b<span class="op">;</span><span class="dt">int</span> c<span class="op">;}</span> MiStruct<span class="op">;</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="kw">typedef</span> <span class="kw">union</span> MiUnion <span class="op">{</span><span class="dt">char</span> b<span class="op">[</span><span class="dv">4</span><span class="op">];</span><span class="dt">short</span> h<span class="op">[</span><span class="dv">2</span><span class="op">];</span><span class="dt">long</span> w<span class="op">;}</span> MiUnion<span class="op">;</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="co">// Lista de inicialización</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a><span class="dt">int</span> arreglo_1<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">};</span>  <span class="co">// Toma la dimensión de la lista</span></span>
+<span id="cb58-5"><a href="#cb58-5"></a><span class="dt">int</span> arreglo_2<span class="op">[</span><span class="dv">8</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">};</span> <span class="co">// Los miembros no especificados se inicializan en 0</span></span>
+<span id="cb58-6"><a href="#cb58-6"></a><span class="dt">int</span> arreglo_3<span class="op">[][</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">{{</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">},{</span><span class="dv">1</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">}};</span> <span class="co">// Solo puede omitirse la primera dimensión</span></span>
+<span id="cb58-7"><a href="#cb58-7"></a><span class="dt">char</span> arreglo4<span class="op">[]</span> <span class="op">=</span> <span class="st">"ABC"</span><span class="op">;</span> <span class="co">// equivale a {'A','B','C','0'}</span></span>
+<span id="cb58-8"><a href="#cb58-8"></a>MiStruct estructura_1 <span class="op">=</span> <span class="op">{</span><span class="dv">3</span><span class="op">,</span><span class="dv">5</span><span class="op">,</span><span class="dv">7</span><span class="op">};</span> <span class="co">// a=3, b=5, c=7</span></span>
+<span id="cb58-9"><a href="#cb58-9"></a>MiStruct estructura_2 <span class="op">=</span> <span class="op">{</span><span class="dv">1</span><span class="op">};</span>     <span class="co">// a=1, b=0, c=0</span></span>
+<span id="cb58-10"><a href="#cb58-10"></a>MiUnion  union_1 <span class="op">=</span> <span class="op">{{</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">}};</span>  <span class="co">// En una unión solo puede inicializarse así el primer miembro</span></span>
+<span id="cb58-11"><a href="#cb58-11"></a><span class="co">// Inicializador con designación</span></span>
+<span id="cb58-12"><a href="#cb58-12"></a><span class="co">// inicializa {3,4,0,0,0,23,24,0,-4,0,0,0,0,0,0}</span></span>
+<span id="cb58-13"><a href="#cb58-13"></a><span class="dt">int</span> arreglo_5<span class="op">[</span><span class="dv">15</span><span class="op">]</span> <span class="op">=</span> <span class="op">{[</span><span class="dv">5</span><span class="op">]=</span><span class="dv">23</span><span class="op">,</span><span class="dv">24</span><span class="op">,[</span><span class="dv">8</span><span class="op">]=-</span><span class="dv">4</span><span class="op">,[</span><span class="dv">0</span><span class="op">]=</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">};</span></span>
+<span id="cb58-14"><a href="#cb58-14"></a><span class="co">// inicializa {{0,0},{1,2},{0,0}}</span></span>
+<span id="cb58-15"><a href="#cb58-15"></a><span class="dt">int</span> arreglo_6<span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="op">{[</span><span class="dv">1</span><span class="op">]={</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">}};</span></span>
+<span id="cb58-16"><a href="#cb58-16"></a><span class="co">// inicializa {{1,0},{0,0},{0,2}}</span></span>
+<span id="cb58-17"><a href="#cb58-17"></a><span class="dt">int</span> arreglo_7<span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="op">{[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]=</span><span class="dv">1</span><span class="op">,[</span><span class="dv">2</span><span class="op">][</span><span class="dv">1</span><span class="op">]=</span><span class="dv">2</span><span class="op">};</span></span>
+<span id="cb58-18"><a href="#cb58-18"></a>MiStruct estructura_3 <span class="op">=</span> <span class="op">{.</span>b<span class="op">=</span><span class="dv">3</span><span class="op">,.</span>a<span class="op">=-</span><span class="dv">2</span><span class="op">};</span> <span class="co">// a=-2, b=3, c=0</span></span>
+<span id="cb58-19"><a href="#cb58-19"></a><span class="co">// Única manera de inicializar un miembro de una union que no sea el primero</span></span>
+<span id="cb58-20"><a href="#cb58-20"></a><span class="co">// w es -7</span></span>
+<span id="cb58-21"><a href="#cb58-21"></a>MiUnion union_2 <span class="op">=</span> <span class="op">{.</span>w<span class="op">=-</span><span class="dv">7</span><span class="op">};</span></span>
+<span id="cb58-22"><a href="#cb58-22"></a><span class="co">// h es {0,4}</span></span>
+<span id="cb58-23"><a href="#cb58-23"></a>MiUnion union_3 <span class="op">=</span> <span class="op">{.</span>h<span class="op">[</span><span class="dv">1</span><span class="op">]=</span><span class="dv">4</span><span class="op">};</span></span>
+<span id="cb58-24"><a href="#cb58-24"></a><span class="co">// b es {0,0,5,7}</span></span>
+<span id="cb58-25"><a href="#cb58-25"></a>MiUnion union_4 <span class="op">=</span> <span class="op">{.</span>b<span class="op">={[</span><span class="dv">2</span><span class="op">]=</span><span class="dv">5</span><span class="op">,</span><span class="dv">7</span><span class="op">}};</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="literales-compuestos" class="slide level2">
+<h2>Literales compuestos</h2>
+<p>Los literales compuestos crean <strong>constantes</strong> de tipo estructura, unión o arreglo. Para crearlos se especifica el tipo entre paréntesis y se ubica a continuación un inicializador con designación.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb59-1"><a href="#cb59-1"></a><span class="pp">#include </span><span class="im">&lt;assert.h&gt;</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="kw">typedef</span> <span class="kw">struct</span> <span class="op">{</span><span class="dt">char</span> nombre<span class="op">[</span><span class="dv">20</span><span class="op">];</span><span class="dt">char</span> apellido<span class="op">[</span><span class="dv">20</span><span class="op">];</span><span class="dt">int</span> edad<span class="op">;}</span> Ficha<span class="op">;</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="dt">int</span> posicion_maximo<span class="op">(</span><span class="dt">int</span> n<span class="op">,</span><span class="dt">int</span> <span class="dt">const</span> <span class="op">*</span>b<span class="op">);</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="dt">void</span> muestra_ficha<span class="op">(</span>Ficha <span class="dt">const</span> <span class="op">*</span>ficha<span class="op">);</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">){</span></span>
+<span id="cb59-6"><a href="#cb59-6"></a>    <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb59-7"><a href="#cb59-7"></a>    i <span class="op">=</span> posicion_maximo<span class="op">(</span><span class="dv">8</span><span class="op">,(</span><span class="dt">int</span><span class="op">[</span><span class="dv">8</span><span class="op">]){[</span><span class="dv">3</span><span class="op">]=</span><span class="dv">5</span><span class="op">,</span><span class="dv">6</span><span class="op">,</span><span class="dv">4</span><span class="op">});</span></span>
+<span id="cb59-8"><a href="#cb59-8"></a>    assert<span class="op">(</span><span class="dv">4</span> <span class="op">==</span> i<span class="op">);</span></span>
+<span id="cb59-9"><a href="#cb59-9"></a>    <span class="co">// Puede tomarse la dirección de la constante</span></span>
+<span id="cb59-10"><a href="#cb59-10"></a>    <span class="co">// Esa dirección es de solo lectura.</span></span>
+<span id="cb59-11"><a href="#cb59-11"></a>    muestra_ficha<span class="op">(&amp;(</span>Ficha<span class="op">){</span></span>
+<span id="cb59-12"><a href="#cb59-12"></a>        <span class="op">.</span>nombre <span class="op">=</span> <span class="st">"Juan"</span><span class="op">,</span> <span class="co">// {'J','u','a','n',0,..,0}</span></span>
+<span id="cb59-13"><a href="#cb59-13"></a>        <span class="op">.</span>apellido <span class="op">=</span> <span class="st">"Perez"</span><span class="op">,</span></span>
+<span id="cb59-14"><a href="#cb59-14"></a>        <span class="op">.</span>edad <span class="op">=</span> <span class="dv">20</span><span class="op">});</span></span>
+<span id="cb59-15"><a href="#cb59-15"></a><span class="op">}</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="expresiones" class="slide level2">
+<h2>Expresiones</h2>
 <div class="footer footer-default">
 
 </div>
